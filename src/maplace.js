@@ -148,6 +148,7 @@
         this.circles = [];
         this.oMap = false;
         this.view_all_key = 'all';
+        this.view_clustered = true;
 
         this.infowindow = null;
         this.maxZIndex = 0;
@@ -903,6 +904,12 @@
         //n+ locations
         } else {
             this.oMap.fitBounds(this.oBounds);
+
+            //check if MarkerClusterer function exist and check is clustered view is enabled
+            if (this.view_clustered && (typeof MarkerClusterer === 'function')) {
+                var mcOptions = {gridSize: 50, maxZoom: 15};
+                var markerCluster = new MarkerClusterer(this.oMap, this.markers, mcOptions);
+            }
 
             //check the start option
             if (typeof (this.o.start - 0) === 'number' && this.o.start > 0 && this.o.start <= this.ln) {
